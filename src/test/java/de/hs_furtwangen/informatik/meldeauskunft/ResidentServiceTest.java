@@ -45,5 +45,6 @@ public class ResidentServiceTest {
 		assertEquals(expectedresult.getFamilyName(), actualresult.getFamilyName());
 		assertEquals(expectedresult.getStreet(), actualresult.getStreet());
 		assertEquals(expectedresult.getCity(), actualresult.getCity());
+		assertEquals(expectedresult.getDateOfBirth(), actualresult.getDateOfBirth());
 	}
 }
