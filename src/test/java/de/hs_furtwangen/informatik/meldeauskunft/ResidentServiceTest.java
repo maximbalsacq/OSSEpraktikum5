@@ -7,7 +7,8 @@ import de.hs_furtwangen.informatik.meldeauskunft.repository.*;
 import org.junit.Test; 
 import static org.junit.Assert.*;
 
-import java.util.Date; 
+import java.util.Date;
+import java.util.List; 
 
 public class ResidentServiceTest {
 	@Test
@@ -40,11 +41,37 @@ public class ResidentServiceTest {
 		Resident expectedresult = new Resident("Ada", "Alice", "Adlerstraße", "Althausen", new Date(0, 0, 1));
 		Resident actualresult = s.getUniqueResident(expectedresult);
 		
-		// We have no Resident.equals() method => have to check with JUnit
-		assertEquals(expectedresult.getGivenName(), actualresult.getGivenName());
-		assertEquals(expectedresult.getFamilyName(), actualresult.getFamilyName());
-		assertEquals(expectedresult.getStreet(), actualresult.getStreet());
-		assertEquals(expectedresult.getCity(), actualresult.getCity());
-		assertEquals(expectedresult.getDateOfBirth(), actualresult.getDateOfBirth());
+		assertEquals(true, areResidentsEqual(expectedresult, actualresult));
+	}
+	
+	private static boolean areResidentsEqual(Resident expectedresult, Resident actualresult) {
+		return (
+				expectedresult.getGivenName().equals(actualresult.getGivenName()) &&
+				expectedresult.getFamilyName().equals(actualresult.getFamilyName()) &&
+				expectedresult.getStreet().equals(actualresult.getStreet()) &&
+				expectedresult.getCity().equals(actualresult.getCity()) &&
+				expectedresult.getDateOfBirth().equals(actualresult.getDateOfBirth())
+		);
+	}
+	
+	@Test
+	public void testgetAllFilteredListall() {
+		BaseResidentService s = new BaseResidentService();
+		s.setResidentRepository(new ResidentRepositoryStub());
+		
+		List<Resident> alltestresidents = new ResidentRepositoryStub().getResidents();
+		List<Resident> allresidents = s.getFilteredResidentsList(new Resident("*", "*", "*", "*", null));
+		
+		assertEquals(alltestresidents.size(), allresidents.size());
+		for(Resident t: alltestresidents) {
+			boolean isexistingresident = false;
+			for(Resident r : allresidents) {
+				if(areResidentsEqual(t, r)) {
+					isexistingresident = true;
+					break;
+				}
+			}
+			assertEquals(true, isexistingresident);
+		}
 	}
 }
