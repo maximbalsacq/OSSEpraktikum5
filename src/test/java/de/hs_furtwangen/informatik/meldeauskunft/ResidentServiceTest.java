@@ -92,4 +92,15 @@ public class ResidentServiceTest {
 			assertEquals(true, isexistingresident);
 		}
 	}
+	
+	/*
+	 * Test if an empty list is returned when nothing matches
+	 */
+	@Test
+	public void testgetAllFilteredNothingMatches() throws ResidentServiceException {
+		BaseResidentService s = new BaseResidentService();
+		s.setResidentRepository(new ResidentRepositoryStub());
+		
+		assertEquals(0, s.getFilteredResidentsList(new Resident("clara", "cool", "c", "c", null)).size());
+	}
 }
