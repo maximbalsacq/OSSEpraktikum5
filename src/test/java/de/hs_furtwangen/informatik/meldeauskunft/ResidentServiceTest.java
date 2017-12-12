@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.List; 
 
 public class ResidentServiceTest {
+	/*
+	 * Test if getting a nonexistent resident causes an Exception
+	 */
 	@Test
 	public void testgetNonexistentResident() throws ResidentServiceException {
 		BaseResidentService s = new BaseResidentService();
@@ -22,6 +25,10 @@ public class ResidentServiceTest {
 		}
 	}
 	
+	/*
+	 * Check if an Exception is thrown while an attempt is made get a unique resident
+	 * while the resident contains wildcards
+	 */
 	@Test
 	public void testgetResidentWithWildcard() {
 		BaseResidentService s = new BaseResidentService();
@@ -33,6 +40,9 @@ public class ResidentServiceTest {
 		}
 	}
 	
+	/*
+	 * Check if getUniqueResident() works when passed a Resident (all properties must be the same)
+	 */
 	@Test
 	public void testgetResidentWorking() throws ResidentServiceException {
 		BaseResidentService s = new BaseResidentService();
@@ -44,6 +54,9 @@ public class ResidentServiceTest {
 		assertEquals(true, areResidentsEqual(expectedresult, actualresult));
 	}
 	
+	/*
+	 * Utility compraison function as Resident does not have an equals() method
+	 */
 	private static boolean areResidentsEqual(Resident expectedresult, Resident actualresult) {
 		return (
 				expectedresult.getGivenName().equals(actualresult.getGivenName()) &&
@@ -54,6 +67,11 @@ public class ResidentServiceTest {
 		);
 	}
 	
+	/*
+	 * Checks if all residents returned by calling getFilteredResidentsList()
+	 * with wildcards exist and none are missing (result set must be equal
+	 * to test set).
+	 */
 	@Test
 	public void testgetAllFilteredListall() {
 		BaseResidentService s = new BaseResidentService();
