@@ -6,7 +6,7 @@ package de.hs_furtwangen.informatik.meldeauskunft.service;
 public class ResidentServiceException extends Exception {
 
   /**
-   * @param string
+   * @param message x
    */
   public ResidentServiceException(String message) {
     super(message);
