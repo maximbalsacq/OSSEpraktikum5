@@ -103,4 +103,19 @@ public class ResidentServiceTest {
 		
 		assertEquals(0, s.getFilteredResidentsList(new Resident("clara", "cool", "c", "c", null)).size());
 	}
+	
+	/*
+	 * Test if Residents are correctly filtered using wildcards
+	 */
+	public void testgetAllFilteredWildcard() {
+		BaseResidentService s = new BaseResidentService();
+		s.setResidentRepository(new ResidentRepositoryStub());
+		
+		Resident expectedresult = new Resident("Ada", "*", "*", "*", null);
+		List<Resident> results  = s.getFilteredResidentsList(expectedresult);
+		
+		assertEquals(0, results.size());
+		Resident actualresult = results.get(0);
+		assertEquals(true, areResidentsEqual(expectedresult, actualresult));
+	}
 }
